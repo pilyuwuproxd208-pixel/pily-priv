@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0a0a0a">
+<title>Pily Priv</title>
+<style>
+:root{--bg:#090909;--panel:#141414;--panel2:#1c1c1c;--line:#303030;--text:#f4f4f4;--muted:#999;--silver:#d4d4d4;--danger:#a84646}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+button,input,textarea,select{font:inherit}
+header{padding:24px 18px 18px;border-bottom:1px solid var(--line);background:#0c0c0c}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:44px;height:44px;border:1px solid #444;border-radius:13px;display:grid;place-items:center;color:#eee;font-size:22px}
+h1{font-size:23px;letter-spacing:3px;margin:0;font-weight:650}
+header p{font-size:10px;letter-spacing:2px;color:var(--muted);margin:6px 0 0}
+nav{display:flex;gap:7px;padding:12px;overflow-x:auto;background:#0c0c0c;border-bottom:1px solid #222}
+button{border:1px solid #444;border-radius:9px;background:#e5e5e5;color:#111;padding:11px 14px;font-weight:600;cursor:pointer}
+button:active{opacity:.75}
+button.secondary{background:#191919;color:#ddd;border-color:#333}
+button.danger{background:#291616;color:#f0b5b5;border-color:#603333}
+nav button{white-space:nowrap;font-size:13px}
+main{max-width:720px;margin:auto;padding:17px}
+section{display:none}
+section.active{display:block}
+.heading{margin:5px 0 17px}
+.heading h2{font-size:23px;margin:0 0 6px;font-weight:600}
+.heading p{margin:0;color:var(--muted);font-size:13px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:13px}
+.card h3{font-size:15px;margin:0 0 14px;font-weight:600}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:17px 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:15px}
+.stat .number{font-size:29px;font-weight:600;margin:8px 0}
+.stat .label{color:var(--muted);font-size:12px}
+.eyebrow{font-size:10px;letter-spacing:1.8px;color:#aaa}
+.menuitem{display:flex;align-items:center;gap:13px;padding:14px 0;border-bottom:1px solid #292929}
+.menuitem:last-child{border-bottom:0}
+.menuicon{width:38px;height:38px;background:#222;border:1px solid #363636;border-radius:11px;display:grid;place-items:center;color:#ddd;font-size:17px}
+.menuitem strong{font-size:14px}
+.menuitem p{margin:5px 0 0;color:var(--muted);font-size:12px}
+.arrow{margin-left:auto;color:#777;font-size:20px}
+label{display:block;color:#aaa;font-size:12px;margin:12px 0 5px}
+input,textarea,select{display:block;width:100%;padding:12px;background:#0c0c0c;color:#f4f4f4;border:1px solid #383838;border-radius:9px;outline:none}
+input:focus,textarea:focus,select:focus{border-color:#888}
+textarea{resize:vertical}
+form button,.full{width:100%;margin-top:12px}
+.item{padding:13px 0;border-bottom:1px solid #2c2c2c;overflow-wrap:anywhere}
+.item:last-child{border-bottom:0}
+.item p{margin:7px 0;color:var(--muted);font-size:13px}
+.item button{margin:5px 5px 0 0}
+.pill{display:inline-block;font-size:10px;letter-spacing:.5px;color:#ddd;background:#292929;border:1px solid #3b3b3b;padding:5px 8px;border-radius:20px}
+.muted{color:var(--muted);font-size:13px;line-height:1.5}
+.small{font-size:12px;color:var(--muted)}
+.split{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.timer{font-size:20px;letter-spacing:1px;margin:8px 0;color:#eee}
+.empty{text-align:center;padding:20px 8px;color:#777;font-size:13px}
+footer{text-align:center;padding:22px;color:#555;font-size:10px;letter-spacing:2px}
+hr{border:0;border-top:1px solid #303030;margin:16px 0}
+@media(min-width:600px){main{padding:25px}.card{padding:20px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">✦</div>
+    <div>
+      <h1>PILY PRIV</h1>
+      <p>PRIVATE GROUP · ADMIN PANEL</p>
+    </div>
+  </div>
+</header>
+<nav>
+  <button onclick="ver('inicio')">Inicio</button>
+  <button class="secondary" onclick="ver('miembros')">Miembros</button>
+  <button class="secondary" onclick="ver('reglas')">Reglas</button>
+  <button class="secondary" onclick="ver('sanciones')">Sanciones</button>
+  <button class="secondary" onclick="ver('historial')">Historial</button>
+</nav>
+<main>
+<section id="inicio" class="active">
+  <div class="heading">
+    <h2>Panel general</h2>
+    <p>Todo el grupo, organizado en un solo lugar.</p>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="eyebrow">MIEMBROS</div><div class="number" id="totalMiembros">0</div><div class="label">Integrantes registrados</div></div>
+    <div class="stat"><div class="eyebrow">EN CURSO</div><div class="number" id="totalActivas">0</div><div class="label">Sanciones activas</div></div>
+    <div class="stat"><div class="eyebrow">REGLAS</div><div class="number" id="totalReglas">0</div><div class="label">Normas del grupo</div></div>
+    <div class="stat"><div class="eyebrow">DEUDA</div><div class="number" id="totalDeuda">0</div><div class="label">Minutos pendientes</div></div>
+  </div>
+  <div class="card">
+    <h3>Accesos rápidos</h3>
+    <div class="menuitem" onclick="ver('miembros')"><div class="menuicon">♙</div><div><strong>Miembros</strong><p>Agregar y administrar integrantes</p></div><div class="arrow">›</div></div>
+    <div class="menuitem" onclick="ver('reglas')"><div class="menuicon">≡</div><div><strong>Reglas del grupo</strong><p>Consultar y editar las normas</p></div><div class="arrow">›</div></div>
+    <div class="menuitem" onclick="ver('sanciones')"><div class="menuicon">◷</div><div><strong>Sanciones y deudas</strong><p>Controlar tiempos y reintegros</p></div><div class="arrow">›</div></div>
+    <div class="menuitem" onclick="ver('historial')"><div class="menuicon">↺</div><div><strong>Historial</strong><p>Ver los últimos movimientos</p></div><div class="arrow">›</div></div>
+  </div>
+  <div class="card"><h3>Sanciones activas</h3><div id="inicioActivas"></div></div>
+  <p class="muted">Los minutos de deuda se acumulan y no se borran automáticamente.</p>
+</section>
+
+<section id="miembros">
+  <div class="heading"><h2>Miembros</h2><p>Administrá los integrantes del grupo.</p></div>
+  <div class="card">
+    <form onsubmit="agregarMiembro(event)">
+      <label>Nombre o apodo</label>
+      <input id="nombre" placeholder="Ej. Pily" maxlength="50" required>
+      <button type="submit" class="full">＋ Agregar miembro</button>
+    </form>
+  </div>
+  <div class="card"><h3>Lista de integrantes</h3><div id="listaMiembros"></div></div>
+</section>
+
+<section id="reglas">
+  <div class="heading"><h2>Reglas</h2><p>Las normas que todos deben respetar.</p></div>
+  <div class="card">
+    <form onsubmit="agregarRegla(event)">
+      <label>Nueva regla</label>
+      <textarea id="textoRegla" rows="3" maxlength="500" placeholder="Escribí la regla..." required></textarea>
+      <button type="submit" class="full">＋ Guardar regla</button>
+    </form>
+  </div>
+  <div class="card"><h3>Reglas actuales</h3><div id="listaReglas"></div></div>
+</section>
+
+<section id="sanciones">
+  <div class="heading"><h2>Sanciones</h2><p>Iniciá un tiempo y registrá cuándo termina.</p></div>
+  <div class="card">
+    <h3>Nueva sanción</h3>
+    <form onsubmit="iniciarSancion(event)">
+      <label>Miembro</label><select id="persona" required></select>
+      <label>Motivo</label><input id="motivo" maxlength="200" placeholder="Motivo de la sanción" required>
+      <label>Duración (minutos)</label><input id="duracion" type="number" min="1" max="10080" value="30" required>
+      <button type="submit" class="full">Iniciar temporizador</button>
+    </form>
+  </div>
+  <div class="card"><h3>En curso</h3><div id="listaActivas"></div></div>
+  <div class="card"><h3>Deuda de minutos</h3><p class="muted">Si una sanción dura 30 minutos y la persona vuelve a los 40, se suman 10 minutos de deuda.</p><div id="listaDeudas"></div></div>
+</section>
+
+<section id="historial">
+  <div class="heading"><h2>Historial</h2><p>Registro de sanciones y cambios de deuda.</p></div>
+  <div class="card"><div id="listaHistorial"></div><hr><button class="secondary" onclick="exportarHistorial()">Exportar historial</button></div>
+</section>
+<footer>PILY PRIV · PRIVATE GROUP</footer>
+</main>
+<script>
+const clave=k=>"pilypriv_v2_"+k;
+function leer(k,d=[]){try{const v=JSON.parse(localStorage.getItem(clave(k)));return Array.isArray(v)?v:d}catch(e){return d}}
+let miembros=leer("miembros");
+let reglas=leer("reglas");
+let sanciones=leer("sanciones");
+let historial=leer("historial");
+
+function guardar(){
+try{
+localStorage.setItem(clave("miembros"),JSON.stringify(miembros));
+localStorage.setItem(clave("reglas"),JSON.stringify(reglas));
+localStorage.setItem(clave("sanciones"),JSON.stringify(sanciones));
+localStorage.setItem(clave("historial"),JSON.stringify(historial));
+dibujar();
+}catch(e){alert("No se pudieron guardar los datos en este navegador.");}
+}
+function seguro(t){return String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function ver(id){
+document.querySelectorAll("main section").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+dibujar();
+window.scrollTo(0,0);
+}
+function registrar(texto){
+historial.unshift({fecha:new Date().toLocaleString("es-AR"),texto});
+if(historial.length>300)historial=historial.slice(0,300);
+}
+function agregarMiembro(e){
+e.preventDefault();
+const nombre=document.getElementById("nombre").value.trim();
+if(!nombre)return;
+if(miembros.some(m=>m.nombre.toLowerCase()===nombre.toLowerCase()))return alert("Ese miembro ya existe.");
+miembros.push({id:Date.now(),nombre,deuda:0});
+registrar("Se agregó al miembro "+nombre+".");
+e.target.reset();guardar();
+}
+function eliminarMiembro(id){
+const m=miembros.find(x=>x.id===id);
+if(!m)return;
+if(sanciones.some(s=>s.miembroId===id))return alert("Primero finalizá las sanciones activas de este miembro.");
+if(!confirm("¿Eliminar a "+m.nombre+"? Se perderá su registro de deuda."))return;
+miembros=miembros.filter(x=>x.id!==id);
+registrar("Se eliminó al miembro "+m.nombre+".");
+guardar();
+}
+function agregarRegla(e){
+e.preventDefault();
+const texto=document.getElementById("textoRegla").value.trim();
+if(!texto)return;
+reglas.push({id:Date.now(),texto});
+registrar("Se agregó una regla: "+texto);
+e.target.reset();guardar();
+}
+function eliminarRegla(id){
+const r=reglas.find(x=>x.id===id);
+if(!r||!confirm("¿Eliminar esta regla?"))return;
+reglas=reglas.filter(x=>x.id!==id);
+registrar("Se eliminó la regla: "+r.texto);
+guardar();
+}
+function iniciarSancion(e){
+e.preventDefault();
+const m=miembros.find(x=>x.id===Number(document.getElementById("persona").value));
+const motivo=document.getElementById("motivo").value.trim();
+const duracion=Number(document.getElementById("duracion").value);
+if(!m)return alert("Primero agregá un miembro.");
+if(!motivo||!Number.isFinite(duracion)||duracion<1)return alert("Revisá los datos.");
+sanciones.push({id:Date.now(),miembroId:m.id,nombre:m.nombre,motivo,duracion,inicio:Date.now()});
+registrar("Sanción iniciada para "+m.nombre+": "+motivo+" ("+duracion+" min).");
+e.target.reset();
+document.getElementById("duracion").value=30;
+guardar();
+}
+function finalizarSancion(id){
+const s=sanciones.find(x=>x.id===id);
+if(!s)return;
+if(!confirm("¿Confirmás el reintegro de "+s.nombre+"? Se calculará la deuda según el tiempo transcurrido."))return;
+const transcurridos=Math.max(0,Math.floor((Date.now()-s.inicio)/60000));
+const extra=Math.max(0,transcurridos-s.duracion);
+const m=miembros.find(x=>x.id===s.miembroId);
+if(m)m.deuda=(m.deuda||0)+extra;
+registrar(s.nombre+" fue reintegrado/a. Duración prevista: "+s.duracion+" min; transcurrido: "+transcurridos+" min; deuda agregada: "+extra+" min.");
+sanciones=sanciones.filter(x=>x.id!==id);
+guardar();
+alert("Sanción finalizada. Deuda agregada: "+extra+" minutos.");
+}
+function descontarDeuda(id){
+const m=miembros.find(x=>x.id===id);
+if(!m||m.deuda<=0)return;
+const respuesta=prompt("Deuda actual: "+m.deuda+" minutos. ¿Cuántos minutos querés descontar?");
+if(respuesta===null)return;
+const n=Number(respuesta);
+if(!Number.isFinite(n)||n<=0)return alert("Ingresá una cantidad válida.");
+const descontados=Math.min(m.deuda,Math.floor(n));
+if(!confirm("¿Confirmás descontar "+descontados+" minutos de la deuda de "+m.nombre+"?"))return;
+m.deuda-=descontados;
+registrar("Se descontaron "+descontados+" minutos de deuda a "+m.nombre+".");
+guardar();
+}
+function dibujar(){
+document.getElementById("totalMiembros").textContent=miembros.length;
+document.getElementById("totalActivas").textContent=sanciones.length;
+document.getElementById("totalReglas").textContent=reglas.length;
+document.getElementById("totalDeuda").textContent=miembros.reduce((a,m)=>a+(Number(m.deuda)||0),0);
+document.getElementById("persona").innerHTML=miembros.length?miembros.map(m=>'<option value="'+m.id+'">'+seguro(m.nombre)+'</option>').join(""):'<option value="">Agregá miembros primero</option>';
+document.getElementById("listaMiembros").innerHTML=miembros.length?miembros.map(m=>'<div class="item"><div class="split"><b>'+seguro(m.nombre)+'</b><span class="pill">'+(m.deuda||0)+' min deuda</span></div><p>Integrante del grupo</p><button class="danger" onclick="eliminarMiembro('+m.id+')">Eliminar</button></div>').join(""):'<div class="empty">Todavía no hay miembros.</div>';
+document.getElementById("listaReglas").innerHTML=reglas.length?reglas.map((r,i)=>'<div class="item"><div class="split"><b>Regla '+(i+1)+'</b><button class="danger" onclick="eliminarRegla('+r.id+')">Eliminar</button></div><p>'+seguro(r.texto)+'</p></div>').join(""):'<div class="empty">Todavía no hay reglas.</div>';
+const activos=sanciones.length?sanciones.map(s=>'<div class="item"><div class="split"><b>'+seguro(s.nombre)+'</b><span class="pill">EN CURSO</span></div><p>'+seguro(s.motivo)+'</p><div class="timer" data-inicio="'+s.inicio+'" data-duracion="'+s.duracion+'">Calculando…</div><p class="small">Duración prevista: '+s.duracion+' min</p><button onclick="finalizarSancion('+s.id+')">Finalizar y reintegrar</button></div>').join(""):'<div class="empty">No hay sanciones activas.</div>';
+document.getElementById("listaActivas").innerHTML=activos;
+document.getElementById("inicioActivas").innerHTML=sanciones.length?activos:'<div class="empty">No hay sanciones activas.</div>';
+document.getElementById("listaDeudas").innerHTML=miembros.length?miembros.map(m=>'<div class="item"><div class="split"><b>'+seguro(m.nombre)+'</b><span class="pill">'+(m.deuda||0)+' min</span></div>'+(m.deuda>0?'<button class="secondary" onclick="descontarDeuda('+m.id+')">Descontar deuda</button>':'<p>Sin deuda pendiente</p>')+'</div>').join(""):'<div class="empty">Agregá miembros para administrar deudas.</div>';
+document.getElementById("listaHistorial").innerHTML=historial.length?historial.map(h=>'<div class="item"><p class="small">'+seguro(h.fecha)+'</p>'+seguro(h.texto)+'</div>').join(""):'<div class="empty">Todavía no hay movimientos.</div>';
+actualizarTimers();
+}
+function actualizarTimers(){
+document.querySelectorAll(".timer").forEach(el=>{
+const inicio=Number(el.dataset.inicio),duracion=Number(el.dataset.duracion);
+const trans=Math.max(0,Math.floor((Date.now()-inicio)/60000));
+const segundos=Math.floor((Date.now()-inicio)/1000)%60;
+const faltan=duracion*60-Math.floor((Date.now()-inicio)/1000);
+if(faltan>0){
+const min=Math.floor(faltan/60),seg=faltan%60;
+el.textContent="Restan "+min+":"+String(seg).padStart(2,"0");
+}else{
+el.textContent="Tiempo cumplido · +"+Math.max(0,trans-duracion)+" min extra";
+}
+});
+}
+function exportarHistorial(){
+const texto=historial.map(h=>h.fecha+" — "+h.texto).join("\n");
+if(!texto)return alert("No hay historial para exportar.");
+const blob=new Blob([texto],{type:"text/plain;charset=utf-8"});
+const url=URL.createObjectURL(blob);
+const a=document.createElement("a");a.href=url;a.download="pily-priv-historial.txt";a.click();URL.revokeObjectURL(url);
+}
+dibujar();
+setInterval(actualizarTimers,1000);
+</script>
+</body>
+</html>
